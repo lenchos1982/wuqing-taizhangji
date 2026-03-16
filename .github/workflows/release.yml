@@ -7,60 +7,36 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: 'macos-latest'
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest'
-            args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04'
-            args: ''
-          - platform: 'windows-latest'
-            args: ''
-
-    runs-on: ${{ matrix.platform }}
-
+    runs-on: ubuntu-22.04
+    
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           path: wuqing-taizhangji
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: wuqing-taizhangji/package-lock.json
 
       - name: Install Rust
         uses: dtolnay/rust-action@stable
 
-      - name: Install dependencies (Ubuntu)
-        if: matrix.platform == 'ubuntu-22.04'
+      - name: Install deps
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install dependencies (macOS)
-        if: matrix.platform == 'macos-latest'
-        run: |
-          brew install webkitgtk
-
-      - name: Install npm dependencies
-        working-directory: ./wuqing-taizhangji
+      - name: Install npm
+        working-directory: wuqing-taizhangji
         run: npm ci
 
-      - name: Build Tauri app
+      - name: Build
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: v__VERSION__
           releaseName: '无情台账机 v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
-          prerelease: false
-          args: ${{ matrix.args }}
