@@ -9,10 +9,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: wuqing-taizhangji
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -22,23 +19,22 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Install npm deps
+        run: npm ci
+
       - name: Build
-        working-directory: wuqing-taizhangji
         run: npm run tauri build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-exe
-          path: wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji.exe
+          path: src-tauri/target/release/wuqing-taizhangji.exe
 
   build-ubuntu:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: wuqing-taizhangji
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -53,12 +49,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
+      - name: Install npm deps
+        run: npm ci
+
       - name: Build
-        working-directory: wuqing-taizhangji
         run: npm run tauri build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ubuntu-binary
-          path: wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji
+          path: src-tauri/target/release/wuqing-taizhangji
