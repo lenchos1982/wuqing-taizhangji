@@ -10,34 +10,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: wuqing-taizhangji
+          node-version: '20'
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install npm dependencies
+        working-directory: wuqing-taizhangji
+        run: npm ci
 
       - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: wuqing-taizhangji
+        run: npm run tauri build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          tagName: v__VERSION__
-          releaseName: '无情台账机 v__VERSION__'
-          releaseBody: '自动构建'
-          releaseDraft: false
-          projectPath: wuqing-taizhangji/wuqing-taizhangji
+          name: ubuntu-app
+          path: wuqing-taizhangji/wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji
 
   build-windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: wuqing-taizhangji
+          node-version: '20'
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install npm dependencies
+        working-directory: wuqing-taizhangji
+        run: npm ci
 
       - name: Build Tauri app
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: wuqing-taizhangji
+        run: npm run tauri build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          tagName: v__VERSION__
-          releaseName: '无情台账机 v__VERSION__'
-          releaseBody: '自动构建'
-          releaseDraft: false
-          projectPath: wuqing-taizhangji/wuqing-taizhangji
+          name: windows-app
+          path: wuqing-taizhangji/wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji.exe
