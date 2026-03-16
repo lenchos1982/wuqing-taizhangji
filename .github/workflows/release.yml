@@ -7,12 +7,43 @@ on:
 
 jobs:
   build:
-    permissions:
-      contents: write
-    uses: tauri-apps/tauri/.github/workflows/release.yml@v2
-    with:
-      tagName: v__VERSION__
-      releaseName: '无情台账机 v__VERSION__'
-      releaseBody: 'See the assets to download this version and install.'
-      releaseDraft: false
-      prerelease: false
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps (Ubuntu)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run tauri build -- --target x86_64-pc-windows-msvc
+        if: matrix.platform == 'windows-latest'
+
+      - name: Build
+        run: npm run tauri build
+        if: matrix.platform == 'ubuntu-latest'
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-artifact
+          path: src-tauri/target/release/wuqing-taizhangji
