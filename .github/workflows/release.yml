@@ -1,8 +1,6 @@
 name: Build
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -14,26 +12,8 @@ jobs:
         with:
           path: app
 
-      - name: Show directory
-        working-directory: app
-        run: ls -la
+      - name: Check root
+        run: dir
 
-      - name: Show app directory
-        working-directory: app
-        run: ls -la wuqing-taizhangji/
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install npm deps
-        working-directory: app/wuqing-taizhangji
-        run: npm ci
-
-      - name: Build
-        working-directory: app/wuqing-taizhangji
-        run: npm run tauri build
+      - name: Check app folder
+        run: dir app
