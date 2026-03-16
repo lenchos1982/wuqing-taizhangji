@@ -7,66 +7,37 @@ on:
 
 jobs:
   build-ubuntu:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          path: app
+          path: wuqing-taizhangji
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-
-      - name: Build
-        working-directory: app/wuqing-taizhangji
-        run: |
-          npm ci
-          npm run tauri build
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
         with:
-          name: ubuntu-binary
-          path: app/wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji
+          tagName: v__VERSION__
+          releaseName: '无情台账机 v__VERSION__'
+          releaseBody: '自动构建'
+          releaseDraft: false
+          projectPath: wuqing-taizhangji/wuqing-taizhangji
 
   build-windows:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          path: app
+          path: wuqing-taizhangji
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Build
-        working-directory: app/wuqing-taizhangji
-        run: |
-          npm ci
-          npm run tauri build
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
         with:
-          name: windows-binary
-          path: app/wuqing-taizhangji/src-tauri/target/release/wuqing-taizhangji.exe
+          tagName: v__VERSION__
+          releaseName: '无情台账机 v__VERSION__'
+          releaseBody: '自动构建'
+          releaseDraft: false
+          projectPath: wuqing-taizhangji/wuqing-taizhangji
