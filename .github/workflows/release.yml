@@ -6,28 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install npm
-        run: npm ci
-
-      - name: Build
-        run: npm run tauri build -- --no-bundle
-
-      - name: Upload binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-binary
-          path: src-tauri/target/release/wuqing-taizhangji.exe
+  build:
+    permissions:
+      contents: write
+    uses: tauri-apps/tauri/.github/workflows/release.yml@v2
+    with:
+      tagName: v__VERSION__
+      releaseName: '无情台账机 v__VERSION__'
+      releaseBody: 'See the assets to download this version and install.'
+      releaseDraft: false
+      prerelease: false
