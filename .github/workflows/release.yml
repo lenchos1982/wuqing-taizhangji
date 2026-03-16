@@ -30,17 +30,12 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run tauri build -- --no-bundle 2>&1 | tee build.log
+        run: npm run tauri build -- --no-bundle
 
-      - name: Upload log
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build.log
+      - name: Show files
+        run: ls -la src-tauri/target/release/
 
       - name: Upload binary
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: linux-binary
