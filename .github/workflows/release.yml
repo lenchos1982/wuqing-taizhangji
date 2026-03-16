@@ -7,12 +7,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ubuntu-latest]
-
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,16 +29,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run tauri build
+        run: npm run tauri build -- --no-bundle
 
-      - name: Upload .deb
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: linux-deb
-          path: src-tauri/target/release/bundle/deb/*.deb
-
-      - name: Upload .rpm
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-rpm
-          path: src-tauri/target/release/bundle/rpm/*.rpm
+          name: linux-binary
+          path: src-tauri/target/release/wuqing-taizhangji
