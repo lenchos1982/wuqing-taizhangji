@@ -1,0 +1,248 @@
+/* SynonymMapping Component Styles */
+.synonym-mapping {
+  padding: 20px;
+  max-width: 800px;
+}
+
+.synonym-mapping__header {
+  margin-bottom: 24px;
+}
+
+.synonym-mapping__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.synonym-mapping__subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.synonym-mapping__empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+/* Form Styles */
+.synonym-mapping__form {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.synonym-mapping__form-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.synonym-mapping__form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.synonym-mapping__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.synonym-mapping__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+}
+
+.synonym-mapping__input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.synonym-mapping__input:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+.synonym-mapping__input--small {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.synonym-mapping__btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.synonym-mapping__btn--primary {
+  background: #4f46e5;
+  color: white;
+}
+
+.synonym-mapping__btn--primary:hover:not(:disabled) {
+  background: #4338ca;
+}
+
+.synonym-mapping__btn--primary:disabled {
+  background: #a5a5a5;
+  cursor: not-allowed;
+}
+
+.synonym-mapping__btn--secondary {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.synonym-mapping__btn--secondary:hover {
+  background: #e0e0e0;
+}
+
+.synonym-mapping__btn--small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* List Styles */
+.synonym-mapping__list {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.synonym-mapping__list-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.synonym-mapping__loading,
+.synonym-mapping__empty-list {
+  text-align: center;
+  padding: 30px 20px;
+  color: #888;
+}
+
+.synonym-mapping__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.synonym-mapping__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  gap: 16px;
+}
+
+.synonym-mapping__item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.synonym-mapping__standard,
+.synonym-mapping__synonyms {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.synonym-mapping__standard-label,
+.synonym-mapping__synonyms-label {
+  font-size: 12px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.synonym-mapping__standard-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.synonym-mapping__synonyms-list {
+  font-size: 13px;
+  color: #666;
+  word-break: break-word;
+}
+
+/* Action Buttons */
+.synonym-mapping__item-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.synonym-mapping__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.synonym-mapping__action-btn:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.synonym-mapping__action-btn--delete:hover {
+  background: #ffebee;
+  color: #c62828;
+}
+
+/* Edit Form */
+.synonym-mapping__edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.synonym-mapping__edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .synonym-mapping__item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .synonym-mapping__item-actions {
+    justify-content: flex-end;
+  }
+}
