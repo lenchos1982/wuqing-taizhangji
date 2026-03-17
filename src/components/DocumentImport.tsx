@@ -9,7 +9,7 @@ interface DocumentImportProps {
 }
 
 const DEFAULT_ACCEPTED_TYPES = ['.pdf', '.jpg', '.jpeg', '.png'];
-const DEFAULT_MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const DEFAULT_MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 
 export const DocumentImport: React.FC<DocumentImportProps> = ({
   onFilesSelected,

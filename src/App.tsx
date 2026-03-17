@@ -206,7 +206,7 @@ function App() {
                 <DocumentImport
                   onFilesSelected={handleFilesSelected}
                   acceptedTypes={[".pdf", ".jpg", ".jpeg", ".png"]}
-                  maxFileSize={10 * 1024 * 1024}
+                  maxFileSize={100 * 1024 * 1024}
                 />
               ) : (
                 <p className="hint">Select a project to import documents</p>
