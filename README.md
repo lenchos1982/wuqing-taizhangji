@@ -1,7 +1,145 @@
-# Tauri + React + Typescript
+# 无情台账机 - 用户使用手册
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+## 📦 软件介绍
 
-## Recommended IDE Setup
+无情台账机是一款基于 AI OCR 技术的台账自动录入工具，可以帮助用户快速将纸质文档（PDF、图片）中的内容提取到 Excel 表格中。
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+### 主要功能
+
+- 📥 **文档导入** - 支持 PDF、JPG、PNG 格式
+- 🔧 **字段定义** - 自定义需要提取的字段
+- 🔤 **同义词映射** - 配置字段的同义词，提高识别准确率
+- ⏳ **待确认列表** - AI 识别置信度低于 80% 的内容需要人工确认
+- 📤 **Excel 导出** - 一键导出为 Excel 文件
+
+---
+
+## 🚀 快速开始
+
+### 第一步：配置 API Key
+
+1. 打开软件，点击右下角 **⚙️ Settings** 按钮
+2. 在「Alibaba Cloud API Key」输入框中填写您的阿里云 API Key
+3. 点击 **Save** 保存
+
+> ⚠️ **重要**：必须先配置 API Key 才能使用 OCR 功能。如果没有阿里云 API Key，请访问 [阿里云百炼平台](https://platform.aliyun.com/) 注册并获取。
+
+### 第二步：创建项目
+
+1. 点击 **📥 Import** 标签页
+2. 在「New project name」输入框中输入项目名称（如「2024年办公费用台账」）
+3. 点击 **Create Project** 创建项目
+4. 创建成功后，点击项目名称选中它
+
+### 第三步：导入文档
+
+1. 选中项目后，将 PDF 或图片文件拖拽到上传区域
+2. 或点击上传区域选择文件
+3. 系统会自动调用阿里百炼 OCR 进行文字识别
+
+> 📎 支持格式：PDF、JPG、PNG  
+> 📏 单个文件大小限制：10MB
+
+### 第四步：定义字段
+
+1. 点击 **🔧 Fields** 标签页
+2. 点击 **Add Field** 添加需要提取的字段
+3. 输入字段名称（如「发票号码」「金额」「日期」等）
+4. 可以添加多个字段
+
+### 第五步：配置同义词（可选）
+
+1. 点击 **🔤 Synonyms** 标签页
+2. 添加同义词组，例如：
+   - 「发票号」「发票号码」「票号」
+   - 「金额」「款额」「数额」
+3. 同义词可以帮助 AI 更好地识别字段
+
+### 第六步：审核待确认内容
+
+1. 点击 **⏳ Pending** 标签页
+2. 系统会显示所有置信度低于 80% 的识别结果
+3. 对每条内容进行操作：
+   - ✅ **Confirm** - 确认识别结果正确
+   - ❌ **Reject** - 拒绝该识别结果
+   - ✏️ **Edit** - 修改识别结果后确认
+
+> 💡 置信度颜色说明：
+> - 🟢 绿色：置信度 ≥ 80%，自动确认
+> - 🟡 黄色：置信度 60-79%，需要审核
+> - 🔴 红色：置信度 < 60%，建议拒绝
+
+### 第七步：导出 Excel
+
+1. 点击 **📤 Export** 标签页
+2. 选择导出选项：
+   - 仅导出已确认的数据
+   - 包含待确认的数据（供人工复核）
+3. 点击 **Export to Excel**
+4. 选择保存路径，导出完成
+
+---
+
+## ⚙️ 设置说明
+
+### Alibaba Cloud API Key
+
+- 用于调用阿里百炼 OCR 服务的密钥
+- 获取方式：
+  1. 访问 [阿里云百炼平台](https://platform.aliyun.com/)
+  2. 注册/登录账号
+  3. 进入「模型服务」-「API-KEY 管理」
+  4. 创建或查看 API Key
+
+> 🔒 安全提示：请妥善保管您的 API Key，不要泄露给他人。
+
+---
+
+## ❓ 常见问题
+
+### Q: 为什么识别结果不准确？
+
+A: 尝试以下方法：
+1. 确保上传的文档图片清晰
+2. 在「Synonyms」中添加更多同义词
+3. 在「Fields」中明确定义字段名称
+
+### Q: OCR 识别速度慢怎么办？
+
+A: 识别速度取决于：
+- 网络连接质量
+- 文档复杂度
+- 服务器负载
+
+建议避开高峰期使用。
+
+### Q: 如何更新软件？
+
+A: 软件支持自动更新。当有新版本时，启动时会提示更新。
+
+### Q: 数据存储在哪里？
+
+A: 所有数据存储在本地 SQLite 数据库中，不会上传到服务器。
+
+### Q: 误删了数据可以恢复吗？
+
+A: 目前版本不支持数据恢复，请谨慎操作。建议定期备份重要数据。
+
+---
+
+## 📞 技术支持
+
+如遇到问题，请提交 Issue：  
+https://github.com/lenchos1982/wuqing-taizhangji/issues
+
+---
+
+## 📄 版本信息
+
+- 当前版本：0.1.0
+- 构建日期：2026-03-17
+- 技术栈：Tauri + React + TypeScript + SQLite
+
+---
+
+*本手册最后更新于 2026年3月*
