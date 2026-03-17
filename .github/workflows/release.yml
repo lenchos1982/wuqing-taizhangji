@@ -20,11 +20,6 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install MinGW (Windows)
-        if: matrix.platform == 'windows-latest'
-        run: |
-          choco install mingw -y
-
       - name: Install deps (Ubuntu)
         if: matrix.platform == 'ubuntu-latest'
         run: |
